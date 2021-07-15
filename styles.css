@@ -1,0 +1,28 @@
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .option {
+    @apply rounded-lg hover:bg-gray-100 cursor-pointer p-2 transition duration-200 ease-out;
+  }
+}
+
+@layer utilities {
+  .outline-blue {
+    outline: 2px solid #93c5fd;
+    outline-offset: 2px;
+    /* Smooth outline with box-shadow:
+    .text1:focus {
+        box-shadow: 0 0 3pt 2pt red;
+    }
+
+    Hard "outline" with box-shadow:
+    .text2:focus {
+        box-shadow: 0 0 0 2pt red;
+    } */
+  }
+
+  .min-h-80 {
+    min-height: 80vh;
+  }
+}
