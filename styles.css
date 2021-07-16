@@ -26,3 +26,7 @@
     min-height: 80vh;
   }
 }
+
+.icon-container span.material-icons {
+  font-size: 12rem;
+}
