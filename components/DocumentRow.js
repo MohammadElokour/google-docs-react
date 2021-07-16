@@ -57,7 +57,7 @@ function DocumentRow({ id, fileName, date }) {
   return (
     <>
       {deleteModal}
-      <div onClick={() => router.push(`/doc/${id}`)} className="flex items-center p-4 rounded-lg hover:bg-gray-100 text-gray-700 text-sm cursor-pointer transition duration-100">
+      <div onClick={() => router.push(`/doc/${id}`)} className="flex items-center px-0 md:px-2 py-4 rounded-lg hover:bg-gray-100 text-gray-700 text-sm cursor-pointer transition duration-100">
         <Icon name="article" size="3xl" color="blue" />
         <p className="flex-grow pl-5 w-10 pr-10 truncate">{fileName}</p>
         <p className="pr-5">{date?.toDate().toLocaleDateString()}</p>

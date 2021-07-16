@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import Header from '../components/Header'
 import Button from "@material-tailwind/react/Button";
-import Image from "next/image"
 import Icon from "@material-tailwind/react/Icon";
 import Login from '../components/Login';
 import Modal from "@material-tailwind/react/Modal";
@@ -82,9 +81,9 @@ export default function Home() {
       </Head>
       <Header />
       {modal}
-      <section className="bg-[#F8F9FA] py-10 px-10">
+      <section className="bg-[#F8F9FA] py-5 px-7 md:py-10 md:px-10">
         <div className="max-w-3xl mx-auto">
-          <div className="flex justify-between mb-3">
+          <div className="flex items-center justify-between mb-3">
             <h2 className="text-gray-700 text-lg">Start a new document</h2>
             <Button
               color="gray"
@@ -115,14 +114,14 @@ export default function Home() {
           </div>
           <div>
             <div onClick={() => setShowModal(true)} className="relative h-52 w-40 border-2 cursor-pointer hover:border-blue-700 transition duration-100">
-              <Image src="https://links.papareact.com/pju" layout="fill" />
+              <img src="docs-blank.png" className="w-full" />
             </div>
             <p className="ml-2 mt-2 font-semibold text-sm text-gray-700">Blank</p>
           </div>
         </div>
       </section>
       <section>
-        <div className="max-w-3xl px-10 md:px-0 bg-white mx-auto py-8">
+        <div className="max-w-3xl px-5 bg-white mx-auto py-8">
           <div className="flex items-center justify-between pb-3 text-gray-700 ">
             <h2 className="font-medium flex-grow">My Documents</h2>
             <p className="mr-10">Date Created</p>

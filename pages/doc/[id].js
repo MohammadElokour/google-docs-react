@@ -3,16 +3,20 @@ import Icon from "@material-tailwind/react/Icon";
 import { useRouter } from "next/dist/client/router"
 import { firestore } from '../../firebase';
 import { useDocumentOnce } from 'react-firebase-hooks/firestore';
-import { getSession, useSession } from 'next-auth/client'
+import { getSession, useSession, signOut } from 'next-auth/client'
 import Login from "../../components/Login";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import TextEditor from "../../components/TextEditor";
-
+import Popover from "@material-tailwind/react/Popover";
+import PopoverContainer from "@material-tailwind/react/PopoverContainer";
+import PopoverBody from "@material-tailwind/react/PopoverBody";
 
 
 function Doc() {
   const [session] = useSession();
   if (!session) return <Login />;
+
+  const menu = useRef();
   const router = useRouter();
   const { id } = router.query
   const docRef = firestore.collection("userDocs").doc(session.user.email).collection("docs").doc(id);
@@ -39,7 +43,7 @@ function Doc() {
 
   return (
     <div>
-      <header className="flex justify-between items-center p-3 pb-1">
+      <header className="flex justify-between items-center p-1 md:p-3 pb-1">
         <span onClick={() => router.push("/")} className="cursor-pointer">
           <Icon name="description" size="6xl" color="blue" />
         </span>
@@ -53,7 +57,7 @@ function Doc() {
             <p className="option">View</p>
             <p className="option">Insert</p>
             <p className="option">Format</p>
-            <p className="option">Tools</p>
+            <p className="hidden md:inline-flex option">Tools</p>
           </div>
         </div>
         <Button
@@ -61,13 +65,32 @@ function Doc() {
           size="sm"
           buttonType="fill"
           ripple="dark"
-          className="!p-2 md:!px-5"
+          className="mr-2 md:mr-0 !p-2 md:!px-5"
           onClick={(e) => { e.stopPropagation() }}
         > <Icon name="people" size="md" />
           <span className="hidden md:inline-flex ml-0 p-0">Share</span>
         </Button>
-
-        <img className="rounded-full cursor-pointer h-12 w-12 ml-2 hover:shadow-md" src={session?.user?.image} alt="user-image" />
+        <img
+          ref={menu}
+          loading="lazy"
+          className="hidden md:inline-flex cursor-pointer h-12 w-12 rounded-full mx-2 hover:shadow-md"
+          src={session?.user?.image}
+        />
+        <Popover placement="bottom" ref={menu}>
+          <PopoverContainer className="shadow-md">
+            <PopoverBody className="!p-0">
+              <Button
+                color="blue"
+                buttonType="link"
+                ripple="dark"
+                size="sm"
+                className="border-2"
+                onClick={signOut}
+              ><Icon name="logout" size="2xl" /> Logout
+              </Button>
+            </PopoverBody>
+          </PopoverContainer>
+        </Popover>
       </header>
       <TextEditor />
     </div >

@@ -3,7 +3,7 @@
 
 @layer components {
   .option {
-    @apply rounded-lg hover:bg-gray-100 cursor-pointer p-2 transition duration-200 ease-out;
+    @apply rounded-lg hover:bg-gray-100 cursor-pointer p-2 transition duration-200 ease-out active:rounded-lg;
   }
 }
 

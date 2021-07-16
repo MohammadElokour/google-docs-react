@@ -47,8 +47,8 @@ function TextEditor() {
       <Editor
         editorState={editorState}
         onEditorStateChange={onEditorStateChange}
-        toolbarClassName="flex sticky !px-5 top-0 z-50"
-        editorClassName="mt-6 bg-white shadow-lg max-w-5xl mx-auto border p-10 min-h-screen"
+        toolbarClassName="flex sticky md:!px-5 top-0 z-50"
+        editorClassName="mt-6 bg-white shadow-lg max-w-5xl mx-2 md:mx-auto border p-10 min-h-screen"
       />
     </div>
   )
