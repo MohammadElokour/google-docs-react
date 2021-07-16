@@ -45,7 +45,7 @@ export default function Home() {
   };
 
   const modal = (
-    <Modal size="sm" active={showModal} toggler={() => setShowModal(false)}>
+    <Modal size="sm" active={showModal} toggler={() => { setInput(''); setShowModal(false) }}>
       <ModalBody>
         <input value={input} onChange={(e) => setInput(e.target.value)} type="text" className="outline-none w-full bg-gray-100 px-5 py-3 rounded-lg" placeholder="Untitled document"
           onKeyDown={(e) => e.key === "Enter" && createDocument()} />
@@ -57,7 +57,7 @@ export default function Home() {
           block={false}
           iconOnly={false}
           ripple="dark"
-          onClick={() => setShowModal(false)}
+          onClick={() => { setInput(''); setShowModal(false) }}
         > Cancel
         </Button>
         <Button
