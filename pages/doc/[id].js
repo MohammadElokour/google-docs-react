@@ -48,10 +48,10 @@ function Doc() {
           <Icon name="description" size="6xl" color="blue" />
         </span>
         <div className="flex-grow flex-col">
-          <div className="rounded-md mt-3 h-7 w-4/5 md:w-2/5 xl:w-1/5">
-            <input type="text" value={input || ''} className="text-xl hover:outline-blue relative p-2 outline-none h-4 m-0 py-3 w-full hover focus:outline-blue" onChange={onChangeTitle} />
+          <div className="rounded-md mt-3 h-5 w-4/5 md:w-2/5 xl:w-1/5">
+            <input type="text" value={input || ''} className="text-xl hover:outline-blue relative p-2 outline-none h-5 m-0 py-3 w-full hover focus:outline-blue" onChange={onChangeTitle} />
           </div>
-          <div className="flex items-center text-sm -mx-1 text-gray-600 h-10 space-x-1">
+          <div className="flex items-center mt-2 text-sm -mx-1 text-gray-600 h-10 space-x-1">
             <p className="option">File</p>
             <p className="option">Edit</p>
             <p className="option">View</p>
