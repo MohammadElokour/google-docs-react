@@ -1,21 +1,20 @@
-import Head from 'next/head'
-import Header from '../components/Header'
+import Head from "next/head";
+import Header from "../components/Header";
 import Button from "@material-tailwind/react/Button";
 import Icon from "@material-tailwind/react/Icon";
-import Login from '../components/Login';
+import Login from "../components/Login";
 import Modal from "@material-tailwind/react/Modal";
 import ModalBody from "@material-tailwind/react/ModalBody";
 import ModalFooter from "@material-tailwind/react/ModalFooter";
 import Popover from "@material-tailwind/react/Popover";
 import PopoverContainer from "@material-tailwind/react/PopoverContainer";
 import PopoverBody from "@material-tailwind/react/PopoverBody";
-import { getSession, useSession } from 'next-auth/client'
-import { useRef, useState } from 'react';
+import { getSession, useSession } from "next-auth/client";
+import { useRef, useState } from "react";
 import firebase from "firebase";
-import { firestore } from '../firebase';
-import { useCollection } from 'react-firebase-hooks/firestore';
-import DocumentRow from '../components/DocumentRow';
-
+import { firestore } from "../firebase";
+import { useCollection } from "react-firebase-hooks/firestore";
+import DocumentRow from "../components/DocumentRow";
 
 export default function Home() {
   const [session] = useSession();
@@ -23,32 +22,45 @@ export default function Home() {
 
   const menu = useRef();
   const [showModal, setShowModal] = useState(false);
-  const [input, setInput] = useState()
-  const docRef = firestore.collection('userDocs').doc(session.user.email).collection('docs');
+  const [input, setInput] = useState();
+  const docRef = firestore.collection("userDocs").doc(session.user.email).collection("docs");
 
-  const [snapshot] = useCollection(docRef.orderBy('timestamp', 'desc'))
+  const [snapshot] = useCollection(docRef.orderBy("timestamp", "desc"));
 
   const createDocument = () => {
     if (!input) {
       docRef.add({
-        fileName: 'Untitled Document',
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        fileName: "Untitled Document",
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       });
     } else {
       docRef.add({
         fileName: input,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       });
     }
-    setInput('');
+    setInput("");
     setShowModal(false);
   };
 
   const modal = (
-    <Modal size="sm" active={showModal} toggler={() => { setInput(''); setShowModal(false) }}>
+    <Modal
+      size="sm"
+      active={showModal}
+      toggler={() => {
+        setInput("");
+        setShowModal(false);
+      }}
+    >
       <ModalBody>
-        <input value={input} onChange={(e) => setInput(e.target.value)} type="text" className="outline-none w-full bg-gray-100 px-5 py-3 rounded-lg" placeholder="Untitled document"
-          onKeyDown={(e) => e.key === "Enter" && createDocument()} />
+        <input
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          type="text"
+          className="outline-none w-full bg-gray-100 px-5 py-3 rounded-lg"
+          placeholder="Untitled document"
+          onKeyDown={(e) => e.key === "Enter" && createDocument()}
+        />
       </ModalBody>
       <ModalFooter>
         <Button
@@ -57,8 +69,13 @@ export default function Home() {
           block={false}
           iconOnly={false}
           ripple="dark"
-          onClick={() => { setInput(''); setShowModal(false) }}
-        > Cancel
+          onClick={() => {
+            setInput("");
+            setShowModal(false);
+          }}
+        >
+          {" "}
+          Cancel
         </Button>
         <Button
           color="blue"
@@ -67,11 +84,13 @@ export default function Home() {
           iconOnly={false}
           ripple="light"
           onClick={createDocument}
-        > Create
+        >
+          {" "}
+          Create
         </Button>
       </ModalFooter>
     </Modal>
-  )
+  );
 
   return (
     <div>
@@ -93,7 +112,9 @@ export default function Home() {
               ripple="dark"
               className="!border-0"
               ref={menu}
-              onClick={(e) => { e.stopPropagation() }}
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
             >
               <Icon name="more_vert" size="3xl" />
             </Button>
@@ -105,15 +126,22 @@ export default function Home() {
                     buttonType="link"
                     ripple="dark"
                     size="sm"
-                    onClick={(e) => { e.stopPropagation(); setShowModal(true) }}
-                  ><Icon name="add" size="2xl" /> Create
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowModal(true);
+                    }}
+                  >
+                    <Icon name="add" size="2xl" /> Create
                   </Button>
                 </PopoverBody>
               </PopoverContainer>
             </Popover>
           </div>
           <div>
-            <div onClick={() => setShowModal(true)} className="relative h-52 w-40 border-2 cursor-pointer hover:border-blue-700 transition duration-100">
+            <div
+              onClick={() => setShowModal(true)}
+              className="relative h-52 w-40 border-2 cursor-pointer hover:border-blue-700 transition duration-100"
+            >
               <img src="docs-blank.png" className="w-full" />
             </div>
             <p className="ml-2 mt-2 font-semibold text-sm text-gray-700">Blank</p>
@@ -136,7 +164,6 @@ export default function Home() {
             />
           ))}
         </div>
-
       </section>
     </div>
   );
@@ -147,6 +174,6 @@ export async function getServerSideProps(context) {
   return {
     props: {
       session,
-    }
-  }
+    },
+  };
 }

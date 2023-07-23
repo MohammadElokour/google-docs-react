@@ -1,6 +1,6 @@
 import Button from "@material-tailwind/react/Button";
 import Icon from "@material-tailwind/react/Icon";
-import { signOut, useSession } from 'next-auth/client'
+import { signOut, useSession } from "next-auth/client";
 import { useRef } from "react";
 import Popover from "@material-tailwind/react/Popover";
 import PopoverContainer from "@material-tailwind/react/PopoverContainer";
@@ -69,12 +69,12 @@ function Header() {
               size="sm"
               className="border-2"
               onClick={signOut}
-            ><Icon name="logout" size="2xl" /> Logout
+            >
+              <Icon name="logout" size="2xl" /> Logout
             </Button>
           </PopoverBody>
         </PopoverContainer>
       </Popover>
-
     </header>
   );
 }

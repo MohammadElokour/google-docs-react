@@ -1,4 +1,4 @@
-import { signIn } from 'next-auth/client'
+import { signIn } from "next-auth/client";
 import Button from "@material-tailwind/react/Button";
 import Icon from "@material-tailwind/react/Icon";
 
@@ -9,7 +9,9 @@ function Login() {
         <div className="icon-container select-none">
           <Icon name="description" size="12rem" color="blue" />
         </div>
-        <h1 className="text-gray-600 text-3xl -mt-3 font-semibold subpixel-antialiased select-none">Google Docs</h1>
+        <h1 className="text-gray-600 text-3xl -mt-3 font-semibold subpixel-antialiased select-none">
+          Google Docs
+        </h1>
         <Button
           color="blue"
           buttonType="fill"
@@ -19,11 +21,12 @@ function Login() {
           ripple="light"
           className="w-44 mt-7"
           onClick={signIn}
-        > Login
+        >
+          Login
         </Button>
       </div>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;

@@ -1,16 +1,15 @@
 import Button from "@material-tailwind/react/Button";
 import Icon from "@material-tailwind/react/Icon";
-import { useRouter } from "next/dist/client/router"
-import { firestore } from '../../firebase';
-import { useDocumentOnce } from 'react-firebase-hooks/firestore';
-import { getSession, useSession, signOut } from 'next-auth/client'
+import { useRouter } from "next/dist/client/router";
+import { firestore } from "../../firebase";
+import { useDocumentOnce } from "react-firebase-hooks/firestore";
+import { getSession, useSession, signOut } from "next-auth/client";
 import Login from "../../components/Login";
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
 import TextEditor from "../../components/TextEditor";
 import Popover from "@material-tailwind/react/Popover";
 import PopoverContainer from "@material-tailwind/react/PopoverContainer";
 import PopoverBody from "@material-tailwind/react/PopoverBody";
-
 
 function Doc() {
   const [session] = useSession();
@@ -18,10 +17,16 @@ function Doc() {
 
   const menu = useRef();
   const router = useRouter();
-  const { id } = router.query
-  const docRef = firestore.collection("userDocs").doc(session.user.email).collection("docs").doc(id);
+  const { id } = router.query;
+  const docRef = firestore
+    .collection("userDocs")
+    .doc(session.user.email)
+    .collection("docs")
+    .doc(id);
+
   const [snapshot, loadingSnapshot] = useDocumentOnce(docRef);
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
+
   useEffect(
     () => {
       setInput(snapshot?.data()?.fileName);
@@ -30,16 +35,18 @@ function Doc() {
   );
 
   const onChangeTitle = (e) => {
-    setInput(e.target.value)
-    docRef.set({
-      fileName: e.target.value,
-    }, { merge: true })
-  }
+    setInput(e.target.value);
+    docRef.set(
+      {
+        fileName: e.target.value,
+      },
+      { merge: true }
+    );
+  };
 
   if (!loadingSnapshot && !snapshot?.data()?.fileName) {
     router.replace("/");
   }
-
 
   return (
     <div>
@@ -48,7 +55,12 @@ function Doc() {
           <Icon name="description" size="6xl" color="blue" />
         </span>
         <div className="flex-grow flex-col">
-          <input type="text" value={input || ''} className="mt-3 w-4/5 md:w-2/5 xl:w-1/5 text-xl hover:outline-blue relative px-2 outline-none m-0 focus:outline-blue" onChange={onChangeTitle} />
+          <input
+            type="text"
+            value={input || ""}
+            className="mt-3 w-4/5 md:w-2/5 xl:w-1/5 text-xl hover:outline-blue relative px-2 outline-none m-0 focus:outline-blue"
+            onChange={onChangeTitle}
+          />
           <div className="flex pt-1 items-center text-sm -mx-1 text-gray-600 h-10 space-x-1">
             <p className="option">File</p>
             <p className="option">Edit</p>
@@ -64,8 +76,12 @@ function Doc() {
           buttonType="fill"
           ripple="dark"
           className="mr-2 md:mr-0 !p-2 md:!px-5"
-          onClick={(e) => { e.stopPropagation() }}
-        > <Icon name="people" size="md" />
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
+          {" "}
+          <Icon name="people" size="md" />
           <span className="hidden md:inline-flex ml-0 p-0">Share</span>
         </Button>
         <img
@@ -84,25 +100,25 @@ function Doc() {
                 size="sm"
                 className="border-2"
                 onClick={signOut}
-              ><Icon name="logout" size="2xl" /> Logout
+              >
+                <Icon name="logout" size="2xl" /> Logout
               </Button>
             </PopoverBody>
           </PopoverContainer>
         </Popover>
       </header>
       <TextEditor />
-    </div >
-  )
+    </div>
+  );
 }
 
-export default Doc
-
+export default Doc;
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
   return {
     props: {
       session,
-    }
-  }
+    },
+  };
 }
